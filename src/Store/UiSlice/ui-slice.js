@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialUiState ={
-    isvisible:false
+    isvisible:false,
+    notification:null
 }
 
 const uiSlice = createSlice({
@@ -10,6 +11,9 @@ const uiSlice = createSlice({
     reducers:{
         toggleCartVisible(state, action){
             state.isvisible = !state.isvisible
+        },
+        showNotification(state, action){
+            state.notification = {status : action.payload.status, title: action.payload.title, message: action.payload.message}
         }
     }
 })
