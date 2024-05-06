@@ -9,6 +9,11 @@ const cartSlice =createSlice({
     name: 'cart',
     initialState: initialCartState,
     reducers:{
+        replaceCart(state, action) {
+            console.log('REPLACE CART')
+            state.totalQuantity = action.payload.totalQuantity;
+            state.items = action.payload.items;
+          },
         addItemToCart(state, action) {
             console.log('EXECUTE')
             const newItem = action.payload;
