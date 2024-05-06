@@ -9,13 +9,17 @@ import { uiActions } from './Store/UiSlice/ui-slice';
 let isInitial = true;
 
 function App() {
+    //update the state by dispach action to sent to the redux reducer
     const dispatch = useDispatch()
     const isVisible = useSelector(state => state.ui.isvisible)
     const cart = useSelector(state => state.cart)
+    
+    //if update the state on redux reducer then notifiy update and retriwe data on the anywere of the components using useselector
     const notification = useSelector(state => state.ui.notification)
     console.log(cart)
 
-
+    //when trigger addtocart handler or other increase , decrease Qunatity handler triggers then update the state from the reducer then if the cart have item then useEffect 
+    // hook will execute and sent http request and put the cart data on http cart api from the frontend to backennd if the cart dependancy update then http put request will send on the firebase backend api call
     useEffect(()=>{
       const sentCartData =async()=>{
         dispatch(uiActions.showNotification({
@@ -34,6 +38,7 @@ function App() {
           }
 
           const responseData = await response.json()
+          //handling the error ui if the sucessfuly data send then update the error and then get notify on the screen
           dispatch(uiActions.showNotification({
             status:'success',
             title:'Success!',
@@ -44,6 +49,7 @@ function App() {
         isInitial = false;
         return;
       }
+      //if the error then update the reducer redux state and update the notification and reflect changes on the screen
       sentCartData().catch(error =>
         dispatch(uiActions.showNotification({
           status:'error',
